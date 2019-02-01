@@ -1,0 +1,76 @@
+{%extends "base.html" %}
+{%block title%}
+LOGIN
+{%endblock title%}
+{%block css%}
+{%load static%}
+<style type="text/css">
+	body{
+		padding: 0;
+		margin : 0px;
+		font-family: Helvetica;
+		text-align:center;
+	}
+	.outerContainer{
+		height: 400px;
+		margin: 20px;
+		padding: 20px 30px;
+		background-color: rgba(255,255,255,0.6);
+		border-radius :15px;
+		text-align: center;
+	}
+	token{
+		font-size: 50px;
+		display: block;
+	}
+	custHeader{
+		font-size: 50px;
+		display: block;
+	}
+	form{
+		display: inline-block;margin: 0;padding: 0;
+	}
+	.btn{
+		padding: 30px;
+		margin-top: 35px;
+		border: none;
+		background-color: #66baa8;
+		border-radius: 50px;
+		color: white;
+		font-size: 30px;
+		display: inline-block;
+	}
+	.btn:hover{
+		background-color: #88dcca;
+		color:white;
+	}
+	.image{
+		width: 100px;
+		height: 100px;
+		display: block;
+  		margin-left: 30%;
+  		margin-right: 40%;
+	}
+</style>
+{%endblock css%}
+{%block body%}
+	<div class="outerContainer">
+<!-- 		<div class="logoAndName" style="display: block;">
+			{%load static%}
+			{% with 'Images/logo.png' as itemImage_static %}
+			<img src="{% static itemImage_static %}" class="image" alt="{{item.itemImageName}}" align="left">
+			{%endwith%}
+		</div> -->
+		<div style="display: block;margin: 60px;">
+			<custHeader>Welcome User!</custHeader>
+			<br>
+			<custLine style="font-size: 30px">Your Token number is : </custLine>
+			<token style="color:#000000;font-size: 60px;">{{tokenNum}}</token>
+			<form method="POST" action="{% url 'menu' tokenNum 'ALL' %}">
+			{%csrf_token%}
+				<input type="text" name="tableId" value="{{tableId}}" style="display:none;">
+				<input class ="btn" type="submit" name="proceed" value="PROCEED TO ORDER">
+			</form>
+		</div>
+	</div>
+{%endblock body%}

@@ -1,0 +1,83 @@
+{%extends "restBase.html" %}
+{%block title%}ADD ITEM{%endblock title%}
+{%block  style%}
+<style type="text/css">
+	body{
+			font-family: Helvetica;
+			font-size: 20px;
+		}
+	input[type=text],input[type=number], select {
+	    width: 200px;
+	    padding: 12px 20px;
+	    margin: 8px 0;
+	    display: inline-block;
+	    border: none;
+	    border-radius: 10px;
+	}
+	select{
+		text-align: center;
+		width: 100px;
+	}
+	.addItemContent {
+	    border-radius: 15px;
+	    background-color: rgba(255,255,255,0.75);
+	    padding: 30px;
+	    margin: 20px;
+	    height: 400px;
+	}
+	.btn{
+		display: block;
+		text-align: center;	
+		height: 50px;
+		float: left;
+		background: #66baa8;
+		border: none;
+		text-decoration: none;
+		border-radius: 10px;
+		padding: 10px;
+		color: black;
+	}
+	.btn:hover{
+		color: white;
+	}
+</style>
+{%endblock style%}
+{%block body %}
+<div class="navbar">
+	<form method="GET" action="{% url 'showMenuItems' %}" style="float: left">
+		{%csrf_token%}
+		<input class="navButton" type="submit" name="backup" value="&#8592; BACK">
+	</form>
+	<p style="font-size: px;padding: 20px;margin:10px;display: inline-block;">Enter The Item Details : </p>
+</div>
+
+<div class="addItemContent">
+  <form method="post" action="{% url 'addMenuItem' %}">
+    {%csrf_token%}
+    <label for="itemName">Item Name:   </label>
+    <input type="text" id="itemName" name="itemName" placeholder="example : Idli "><br>
+
+    <label for="itemDesc">Item Desc:   </label>
+    <input type="text" id="itemDesc" name="itemDesc" placeholder="example : idli very fluffy idli..."><br>
+    <label for="itemUnitPrice">Item Unit Price:    </label>
+    <input type="number" id="itemUnitPrice" name="itemUnitPrice" placeholder="20">
+    <br>
+    <label for="itemImageName">Item Image Name:    </label>
+    <input type="text" id="itemImageName" name="itemImageName" placeholder="idli.jpg">
+    <small style="font-size: 12px;float: right;"><b>Note:</b> Place the item Image with this image name in <b>'/customer/static/Images/{imageName}'</b></small>
+    <br>
+    <label for="veg">Is item Veg:    </label>
+    <select id="veg" name="veg">
+      <option value="true">Yes</option>
+      <option value="false">No</option>
+    </select><br>
+  <label for="isenabled">Is item to be added to the menu:    </label>
+    <select id="isenabled" name="isenabled">
+      <option value="true">Yes</option>
+      <option value="false">No</option>
+    </select><br>
+  <input type="submit" value="ADD ITEM" class="btn">
+  </form>
+</div>
+
+{%endblock body%}

@@ -1,0 +1,78 @@
+{%extends "restBase.html" %}
+{%block title%}MANAGER LOGIN{%endblock title%}
+{%block  style%}
+<style type="text/css">
+		body{
+			padding: 0;
+			margin : 0px;
+			font-family: Helvetica;
+			background-size: 100%;
+			font-size: 24px;
+			text-align: center;
+		}
+		form{
+			margin: 20px;
+			padding: 20px 30px;
+			background-color: rgba(255,255,255,0.6);
+			border-radius :15px;
+			position: relative;
+
+		}
+		form input{
+			text-decoration: none;
+			border: none;
+			font-size: 20px;
+			background:rgba(255,255,255,0.75);
+			text-align: center;
+			padding: 20px;
+			border-radius: 15px;
+		}
+		button{
+			padding: 30px;
+			border: none;
+			background-color: #66cc66;
+			border-radius: 30px;
+			color: white;
+			font-size: 16px;
+			display: table;
+   			margin: 0 auto
+		}
+		button:hover{
+			background-color: #55dd55;
+			color:black;
+		}
+		p{
+		font-size: 24px;
+		display: inline-block;
+		text-align: center;
+		margin: 20px;
+		padding: 20px;
+		border-radius: 15px;
+	}
+	.btn{
+		padding: 30px;
+		border: none;
+		margin-top: 20px; 
+		margin-bottom: 20px; 
+		align-self: center;
+		background-color: #66baa8;
+		border-radius: 50px;
+		color: white;
+		font-size: 20px;
+		display: block;
+	}
+	.btn:hover{
+		background-color: #4e8075;
+		color:white;
+	}
+</style>
+{%endblock style%}
+{%block body %}
+<p style="display: block;background-color: rgba(255,255,255,0.6);
+">LOGIN</p>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn">LOGIN</button>
+  </form>
+{%endblock body%}

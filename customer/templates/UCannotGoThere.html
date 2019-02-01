@@ -1,0 +1,60 @@
+{%extends "restBase.html" %}
+{%block title%}MANAGER LOGIN{%endblock title%}
+{%block  style%}
+<style type="text/css">
+		body{
+			padding: 0;
+			margin : 0px;
+			font-family: Helvetica;
+			background-size: 100%;
+			font-size: 24px;
+		}
+		form{
+			margin: 20px;
+			padding: 20px 30px;
+			background-color: rgba(255,255,255,0.6);
+			border-radius :15px;
+			position: relative;
+
+		}
+		form input{
+			text-decoration: none;
+			border: none;
+			font-size: 24px;
+			background:rgba(255,255,255,0.0);
+			text-align: center;
+			padding: 20px;
+			border-radius: 10px;
+		}
+		button{
+			padding: 30px;
+			border: none;
+			background-color: #66cc66;
+			border-radius: 30px;
+			color: white;
+			font-size: 24px;
+			display: table;
+   			margin: 0 auto
+		}
+		button:hover{
+			background-color: #55dd55;
+			color:black;
+		}
+		p{
+		font-size: 24px;
+		display: inline-block;
+		text-align: center;
+		margin: 40px;
+	}
+</style>
+{%endblock style%}
+{%block body %}
+<p>LOGIN</p>
+  <form method="post" action="{% url 'placeOrder' %}">
+  	{%csrf_token%}
+   You cannot GO THERE :
+   	<input type="hidden" name="tokenNum" value="{{tokenNum}}">
+    <button type="submit">Back to the order page</button>
+  </form>
+
+{%endblock body%}

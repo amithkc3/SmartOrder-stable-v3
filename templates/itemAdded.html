@@ -1,0 +1,108 @@
+{%extends "restBase.html" %}
+{%block title%}CURRENT ORDERS{%endblock title%}
+{%block  style%}
+<style>
+	body{
+		padding: 0;
+		margin : 0px;
+		font-family: Helvetica;
+		background-size: 100%;
+	}
+	table{
+		width: 100%;
+		color: #333; 
+		border-collapse:collapse;
+		border-spacing: 0; 
+	}
+	td, th { border: 1px solid black; height: 30px;font-size: 20px;text-align: center; border-radius: 10px;padding:5px;} 
+	.outerContainer{
+		
+		margin: 20px;
+		padding: 20px 30px;
+		background-color: rgba(255,255,255,0.6);
+		border-radius :15px;
+	}
+	.navbar {
+	    overflow: hidden;
+	    background-color: rgba(255,255,255,0.6);
+	    border-radius: 15px;
+	    margin: 20px;
+	}
+	.navbar a {
+	    float: left;
+	    font-size: 32px;
+	    color: black;
+	    text-align: center;
+	   	padding: 20px 20px;
+	    text-decoration: none;
+	}
+	.navbar form {
+	    float: right;
+	}
+	.history{
+	    float: left;
+	    font-size: 32px;
+	    color: black;
+	    text-align: center;
+	   	padding: 20px 20px;
+	    text-decoration: none;
+	    border: none;
+	    background: rgba(255,255,255,0.0);
+	}
+	.completed{
+		display: block;
+		text-align: center;	
+		height: 40px;
+		float: right;
+		background: #66cc66;
+		border: none;
+		text-decoration: none;
+		border-radius: 10px;
+		padding: 10px;
+	}
+	.completed : hover{
+		background: #cccccc;
+	}
+	p{
+		font-size: 40px;
+		display: inline-block;
+		margin: 10px;
+	}
+	.completed{
+		display: block;
+		text-align: center;	
+		height: 40px;
+		margin: 20px;
+		float: left;
+		background: rgba(255,255,255,0.6);
+		border: none;
+		text-decoration: none;
+		border-radius: 10px;
+		padding: 10px;
+	}
+	.completed : hover{
+		background: #66cc66;
+	}
+</style>
+{%endblock style%}
+{%block body %}
+<div class="navbar">
+	<a onclick="refresh()">REFRESH</a>
+	<form method="GET" action="{% url 'managerLogout' %}">
+		{%csrf_token%}
+		<input class="history" type="submit" name="backup" value="LOGOUT">
+	</form>
+	<form method="GET" action="{% url 'showHistory' %}">
+		{%csrf_token%}
+		<input class="history" type="submit" name="backup" value="HISTORY">
+	</form>
+	<form method="GET" action="{% url 'showMenuItems' %}">
+		{%csrf_token%}
+		<input class="history" type="submit" name="backup" value="MENU ITEMS">
+	</form>
+</div>
+<p>{{ack}}</p>
+<form method="GET" action="{%url 'addItemPrompt'%}">
+	<input  class="completed" type="submit" name="submit" value="Add Another">
+</form>
+{%endblock body%}

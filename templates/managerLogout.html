@@ -1,0 +1,55 @@
+{%extends "restBase.html" %}
+{%block title%}MANAGER LOGOUT{%endblock title%}
+{%block  style%}
+<style type="text/css">
+		body{
+			padding: 0;
+			margin : 0px;
+			font-family: Helvetica;
+			background-size: 100%;
+			font-size: 40px;
+		}
+		form{
+			margin: 20px;
+			padding: 20px 30px;
+			background-color: rgba(255,255,255,0.6);
+			border-radius :15px;
+			position: relative;
+
+		}
+		form input{
+			text-decoration: none;
+			border: none;
+			font-size: 30px;
+			background:rgba(255,255,255,0.0);
+			text-align: center;
+			padding: 20px;
+			border-radius: 10px;
+		}
+		button{
+			padding: 30px;
+			border: none;
+			background-color: #66baa8;
+			border-radius: 30px;
+			color: white;
+			font-size: 30px;
+			display: table;
+   			margin: 0 auto
+		}
+		button:hover{
+			color:black;
+		}
+		p{
+		font-size: 40px;
+		text-align: center;
+		margin: 40px;
+	}
+</style>
+{%endblock style%}
+{%block body %}
+
+  <form method="GET" action="{%url 'managerLogin'%}">
+  	<p>YOU HAVE SUCCESSFULLY LOGGED OUT</p>
+    <button type="submit">LOGIN AGAIN</button>
+  </form>
+{%endblock body%}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{%block title%}{%endblock title%}</title>
+	<style>
+	body{
+			background-image: linear-gradient(to top left,#fc6895,#ff8178,#ffa364,#ffc75f);
+			background-repeat: no-repeat;
+  			background-attachment: fixed;
+  			background-position: center;
+	}
+	body{
+		padding: 0;
+		margin : 0px;
+		font-family: Helvetica;
+	}
+	table{
+		width: 100%;
+		color: #333; 
+		border-collapse:collapse;
+		border-spacing: 0; 
+	}
+	td, th { border: 1px solid black; height: 30px;font-size: 20px;text-align: center; border-radius: 10px;padding:5px;} 
+	.outerContainer{
+		
+		margin: 20px;
+		padding: 20px 30px;
+		background-color: rgba(255,255,255,0.6);
+		border-radius :15px;
+	}
+	.navbar {
+	    overflow: hidden;
+	    background-color: rgba(255,255,255,0.6);
+	    border-radius: 15px;
+	    margin: 20px;
+	}
+	.navbar a {
+	    float: left;
+	    font-size: 32px;
+	    color: black;
+	    text-align: center;
+	   	padding: 20px 20px;
+	    text-decoration: none;
+	}
+	.navbar form {
+	    float: right;
+	}
+	.navButton{
+	    float: left;
+	    font-size: 30px;
+	    color: black;
+	    text-align: center;
+	   	padding: 20px 20px;
+	    text-decoration: none;
+	    border: none;
+	    margin: 4px;
+	    border-radius: 15px;
+	    background: rgba(255,255,255,0.0);
+	}
+	.navButton:hover{
+		background: #66baa8;
+	}
+	.image{
+		height: 35px;
+		padding: 0px;
+	}
+	</style>
+	{%block  style%}
+{%endblock style%}
+</head>
+<body>
+{%block body %}
+{%endblock body%}
+</body>
+</html>

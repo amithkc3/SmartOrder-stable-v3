@@ -1,0 +1,59 @@
+{%extends "restBase.html" %}
+{%block title%}ORDER HISTORY{%endblock title%}
+{%block  style%}
+<style>
+	p{
+		font-size: 30px;
+		display: inline-block;
+		margin: 10px;
+	}
+</style>
+</style>
+{%endblock style%}
+{%block body %}
+<div class="navbar">
+	{%load static%}
+	<form method="GET" action="{% url 'managerLogout' %}">
+		{%csrf_token%}
+		<button class="navButton" type="submit">
+		<img src="{% static 'Images/logout.png' %}" class="image" alt="LOGOUT" align="left">
+		</button>
+	</form>
+	<form method="GET" action="{% url 'currentOrderList' %}">
+		{%csrf_token%}
+		<input class="navButton" type="submit" name="backup" value="CURRENT ORDERS">
+	</form>
+	<form method="GET" action="{% url 'showMenuItems' %}">
+		{%csrf_token%}
+		<input class="navButton" type="submit" name="backup" value="MENU ITEMS">
+	</form>
+</div>
+{%for order in orderItems%}
+	<div class="outerContainer" id="{{order.orderNum}}">
+		<p><small>Order No : </small>{{order.orderNum}}</p>
+		<p><small>Total : ₹{{order.total}}</small>
+		<small style="text-align: right">Time : {{order.time}}</small></p>
+
+		<table class="table">
+  			<tr>
+			    <th>ITEM</th>
+			    <th>QUANTITY</th>
+			    <th>PRICE</th> 
+			</tr>
+			{%for orderItem in order.items%}
+				<tr>
+					<td>{{orderItem.itemNum}}.{{orderItem.itemName}}</td>
+					<td>{{orderItem.quantity}}</td>
+					<td>₹{{orderItem.price}}</td>
+
+				</tr>
+			{%endfor%}
+		</table>
+	</div>
+{%endfor%}
+<script type="text/javascript">
+	setTimeout(function(){
+	   window.location.reload(1);
+	}, 5000);
+</script>
+{%endblock body%}

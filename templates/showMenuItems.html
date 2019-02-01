@@ -1,0 +1,114 @@
+{%extends "restBase.html" %}
+{%block title%}SHOW MENU-ITEMS{%endblock title%}
+{%block  style%}
+<style>
+	
+	p{
+		font-size: 40px;
+		display: inline-block;
+		margin: 10px;
+	}
+	.completed{
+		display: block;
+		text-align: center;	
+		height: 40px;
+		margin: 20px;
+		float: left;
+		background: rgba(255,100,100,0.6);
+		border: none;
+		text-decoration: none;
+		border-radius: 10px;
+		padding: 10px;
+	}
+	.completed : hover{
+		background: #66cc66;
+	}
+	.addItem{
+		padding:20px;
+		width: 100%;
+		display: block;
+		text-align: center;	
+		float: left;
+		background: rgba(100,255,100,0.6);
+		border: none;
+		text-decoration: none;
+		border-radius: 10px;
+	}
+	.addItem : hover{
+		background: #66cc66;
+	}
+	.outerContainer2{
+		height: 50px;
+		margin: 20px;
+		padding: 30px 30px;
+		background-color: rgba(255,255,255,0.6);
+		border-radius :15px;
+	}
+	#addItem{
+		float: right;
+	}
+</style>
+{%endblock style%}
+{%block body %}
+<div class="navbar">
+	
+
+	{%load static%}
+	<form method="GET" action="{% url 'managerLogout' %}">
+		{%csrf_token%}
+		<button class="navButton" type="submit">
+		<img src="{% static 'Images/logout.png' %}" class="image" alt="LOGOUT" align="left">
+		</button>
+	</form>
+	<form method="GET" action="{% url 'showHistory' %}">
+		{%csrf_token%}
+		<input class="navButton" type="submit" name="backup" value="HISTORY">
+	</form>
+	<form method="GET" action="{% url 'currentOrderList' %}">
+		{%csrf_token%}
+		<input class="navButton" type="submit" name="backup" value="CURRENT ORDERS">
+	</form>
+	<form method="GET" action="{%url 'addItemPrompt'%}" style="float: left;">
+		<input  class="navButton" type="submit" name="submit" value="&#43; Add Item">
+	</form>
+</div>
+<div class="outerContainer" id="{{order.orderNum}}">
+  			<table class="table">
+  				<tr>
+			    <th>NAME</th>
+			    <th>DESC</th>
+			    <th>UNIT PRICE</th>
+			    <th>IMAGE NAME</th>
+			    <th>IS VEG</th>
+			    <th>IS IN MENU</th>
+			    <th>TOGGLE</th>
+				<th>REMOVE</th>
+			</tr>
+			{%for order in menu%}
+				<tr>
+					<td>{{order.itemNum}}.{{order.itemName}}</td>
+					<td>{{order.itemDesc}}</td>
+					<td>{{order.itemUnitPrice}}</td>
+					<td>{{order.itemImageName}}</td>
+					<td>{{order.isVeg}}</td>
+					<td>{{order.isEnabled}}</td>
+					<td>
+					{%if order.isEnabled == True %}
+					<form method="GET" action="{%url 'toggleItem' order.itemNum %}">
+						<input  class="completed" type="submit" name="submit" value="DISABLE">
+					</form></td>
+					{%else%}
+					<form method="GET" action="{%url 'toggleItem' order.itemNum %}">
+						<input  class="completed" style="background: #66baa8" type="submit" name="submit" value="ENABLE">
+					</form></td>
+					{%endif%}
+					<td>
+						<form method="GET" action="{%url 'removeItem' order.itemNum %}">
+							<input  class="completed" type="submit" name="submit" value="REMOVE">
+						</form>
+					</td>
+				</tr>
+			{%endfor%}
+		</table>
+	</div>
+{%endblock body%}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>PrintBill</title>
+</head>
+<body>
+		<p><small>Order No : </small>{{orderListObj.orderNum}}</p>
+		<p><small>Total : </small>₹{{orderListObj.totalAmount}}</p>
+		<p><small>Order No : </small>{{orderListObj.timeOrderPlaced}}</p>
+		<table class="table">
+  			<tr>
+			    <th>ITEM</th>
+			    <th>QUANTITY</th>
+			    <th>PRICE</th> 
+			</tr>
+			{%for orderItem in orderItems%}
+				<tr>
+					<td>{{orderItem.menu.itemNum}}.{{orderItem.menu.itemName}}</td>
+					<td>{{orderItem.quantity}}</td>
+					<td>{{orderItem.price}}</td>
+				</tr>
+			{%endfor%}
+		</table>
+</body>
+</html>

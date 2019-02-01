@@ -1,0 +1,106 @@
+{%extends "restBase.html" %}
+{%block title%}CURRENT ORDERS{%endblock title%}
+{%block  style%}
+<style>
+	.completed{
+		display: block;
+		text-align: center;	
+		height: 40px;
+		float: right;
+		background: #66baa8;
+		border: none;
+		text-decoration: none;
+		border-radius: 10px;
+		padding: 10px;
+		color: black;
+	}
+	.completed:hover{
+		color: white;
+	}
+
+	p{
+		font-size: 30px;
+		display: inline-block;
+		margin: 10px;
+	}
+	#refresh{
+		height: 35px;
+		padding: 20px;
+		border-radius: 15px;
+		margin: 4px;
+	}
+	#refresh:hover{
+		background: #66baa8;
+	}
+</style>
+{%endblock style%}
+{%block body %}
+<div class="navbar">
+	{%load static%}
+	<a onclick="refresh()"  id="refresh"><img src="{% static 'Images/refresh.png' %}" class="image" alt="REFRESH"></a>
+	<form method="GET" action="{% url 'managerLogout' %}">
+		{%csrf_token%}
+		<button class="navButton" type="submit">
+		<img src="{% static 'Images/logout.png' %}" class="image" alt="LOGOUT" align="left">
+		</button>
+	</form>
+	<form method="GET" action="{% url 'showHistory' %}">
+		{%csrf_token%}
+		<input class="navButton" type="submit" name="backup" value="HISTORY">
+	</form>
+	<form method="GET" action="{% url 'showMenuItems' %}">
+		{%csrf_token%}
+		<input class="navButton" type="submit" name="backup" value="MENU ITEMS">
+	</form>
+</div>
+{%for order in currentOrderItems%}
+	<div class="outerContainer" id="{{order.orderNum}}">
+		<p><small>Order No : </small>{{order.orderNum}}</p>
+		<p><small>Total : </small>₹{{order.total}}</p>
+		<!-- may have error see pink -->
+		<button class="completed" onclick="completed({{order.orderNum}})">COMPLETED</button>
+		<table class="table">
+  			<tr>
+			    <th>ITEM</th>
+			    <th>QUANTITY</th>
+			    <th>PRICE</th> 
+			</tr>
+			{%for orderItem in order.items%}
+				<tr>
+					<td>{{orderItem.menu.itemNum}}.{{orderItem.menu.itemName}}</td>
+					<td>{{orderItem.quantity}}</td>
+					<td>{{orderItem.price}}</td>
+				</tr>
+			{%endfor%}
+		</table>
+	</div>
+{%endfor%}
+{%load static%}
+<script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script type="text/javascript">
+	function completed(orderNum)
+	{
+		$.ajax({
+        		url: "{%url 'orderCompleted' %}",
+        		type : 'POST',
+       			data:{'orderNum':orderNum},
+        		dataType: 'json',
+		        success: function (data) {
+		        	if(data == 200){
+		        		document.getElementById(orderNum).style.display = "none";
+		        		console.log(data);
+		        	}
+		        	else
+		        		console.log("not ok");
+		        }
+     	});
+	}
+	function refresh()
+	{
+	   window.location.reload(1);
+	}
+	setTimeout(function(){
+		window.location.reload(1);
+	},10000);
+</script>
+{%endblock body%}

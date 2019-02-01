@@ -1,0 +1,295 @@
+{%extends "base.html" %}
+{%block title%}
+ACKNOWLEDGEMENT | OrdId : {{orderId}}
+{%endblock title%}
+{%block css%}
+{%load static%}
+<style type="text/css">
+	body{
+		padding: 0;
+		margin : 0px;
+		font-family: Helvetica;
+	}
+	.content{
+		grid-area: con;
+		width: 400px;
+		display: block;
+	}
+	.image{
+		grid-area: im;
+		width: 200px;
+		height: 200px;
+		border-radius :100%;
+
+	}
+	.outerContainer{
+		display: grid;
+		grid-gap: 5px;
+		grid-template-areas: 'con con con im im';
+		margin: 20px;
+		padding: 20px 30px;
+		background-color: rgba(255,255,255,0.6);
+		border-radius :15px;
+	}
+	item{
+		font-size: 35px;
+		margin: 20px 0px ;
+		display: block;
+		font-weight: bold;
+	}
+	desc{
+		font-size: 30px;
+	}
+	.value{
+		text-decoration: none;
+		background: #34bf49;
+		color : white;
+		width:15%;
+		height: 15%;
+		font-size: 25px;
+		border:none;
+		text-align: center;
+	}
+	.minus{
+		text-decoration: none;
+		background: #34bf49;
+		color : white;
+		width:15%;
+		height: 15%;
+		font-size: 22px;
+		border:none;
+		text-align: center;
+		border-radius: 10px 0 0 10px;
+	}
+	.plus{
+		text-decoration: none;
+		background: #34bf49;
+		color : white;
+		width:15%;
+		height: 15%;
+		font-size: 22px;
+		border:none;
+		text-align: center;
+		border-radius: 0 10px 10px 0;
+	}
+		/*---------------------------------------------sidenav---------------------------------------------*/
+	.sidenav {
+	    height: 100%;
+	    width: 0;
+	    position: fixed;
+	    z-index: 1;
+	    top: 0;
+	    right: 0;
+	    background-color: rgba(100,100,100,0.85);
+	    overflow-x: hidden;
+	    transition: 0.5s;
+	}
+	.closeNav{
+		padding: 50px;
+		border: none;
+		background-color: rgb(0,255,0);
+		color: white;
+		font-size: 40px;
+		width: 50%;
+		display: inline;
+	}
+	.placeBtns{
+		margin-top: 23px;
+		margin-bottom: 5px;
+		padding: 38px 0px;
+		width:48%;
+		height: 49%;
+		border: none;
+		background-color: #66cc66;
+		color: white;
+		font-size: 25px;
+		display: inline-block;
+
+	}
+	.selectedItems{
+		color: white;
+		margin:20px;
+		background-size: cover;
+		border-radius: 50px;
+	}
+	.selectedItemsDetails{
+		padding: 50px;
+		background:rgba(0,0,0,0.6);
+		border-radius: 50px;
+	}
+	/*---------------------------------------navbar---------------------------------------*/
+	.navbar {
+	    overflow: hidden;
+	    background-color: rgba(255,255,255,0.6);
+	    border-radius: 15px;
+	    margin: 20px;
+	}
+	.navbar a {
+	    float: left;
+	    font-size: 32px;
+	    color: black;
+	    text-align: center;
+	   	padding: 40px 20px;
+	    text-decoration: none;
+	 }
+	.subnav {
+	    float: left;
+	    overflow: hidden;
+	}
+
+	.subnavbtn {
+	    font-size: 32px;    
+	    border: none;
+	    outline: none;
+	    color: black;
+	    padding: 40px 40px 37px 40px;
+	    background-color: inherit;
+	    font-family: inherit;
+	    margin: 0;
+	}
+
+	.subnav:hover , .placeorder:hover{
+	    background-color: #66cc66;
+	}
+	.subnav-content {
+	    display: none;
+	    position: absolute;
+	    left: 0;
+		background-color:#66cc66;
+		margin: 0px 20px;
+	}
+
+	.subnav-content a {
+	    float: left;
+	    color: black;
+	    text-decoration: none;
+	    padding: 40px;
+	}
+
+	.subnav-content a:hover {
+	    background-color: white;
+	    color:black;
+	}
+
+	.subnav:hover .subnav-content {
+	    display: block;
+	}
+	.placeorder{
+		float: right;
+	}
+	.btn{
+		padding: 30px;
+		border: none;
+		background-color: #66baa8;
+		border-radius: 50px;
+		color: white;
+		font-size: 30px;
+		display: inline-block;
+		align-self: center;
+	}
+	.btn:hover{
+		background-color: #4e8075;
+		color:white;
+	}
+	.navButton{
+	    float: right;
+	    font-size: 30px;
+	    color: black;
+	    text-align: center;
+	   	padding: 20px 20px;
+	    text-decoration: none;
+	    border: none;
+	    margin: 10px;
+	    vertical-align: baseline;
+	    border-radius: 15px;
+	    background: rgba(255,255,255,0.0);
+	}
+	.navButton:hover{
+		background: #66baa8;
+	}
+</style>
+{%endblock css%}
+{%block body%}
+<div class="navbar">
+	<a href="#"><small>Order No.</small><br><cust style="font-size: 50px;">{{orderId}}</cust></a>
+	<a href="#"><small>Amount :</small><br><cust style="font-size: 30px;"><b>₹{{total}}</b></cust></a>
+	<form method="POST" action="{% url 'printBill' %}" target="_blank">
+		{%csrf_token%}
+		<input type="hidden" name="orderId" value="{{orderId}}">
+		<input type="submit" name="submit" value="PRINT BILL" class="navButton">		
+	</form>
+</div>
+
+{%for item in confirmationList %}
+<div class="thebody">
+	<div class="outerContainer">
+		<div class="content">
+			<item>
+			<itemNum id="{{item.itemNum}}">{{item.itemNum}}</itemNum>.<itemName id="{{item.itemNum}}Name">{{item.itemName}}</itemName>
+			</item>
+			<h1 id="{{item.itemNum}}Quantity">Quantity: {{item.quantity}}</h1>
+			<h1 id="{{item.itemNum}}UnitPrice">Price: ₹{{item.price}}</h1>		
+		</div>
+		{%load static%}
+		{% with 'Images/'|add:item.image as itemImage_static %}
+		<img src="{% static itemImage_static %}" class="image" alt="{{item.itemImageName}}" align="left">
+		{%endwith%}
+	</div>
+	</div>
+	{%endfor%}
+
+	<div style="text-align:center;margin: 20px;padding: 45px;background-color: rgba(255,255,255,0.6);border-radius :15px;">
+	<form method="POST" action="{% url 'loginpage' %}" target="_blank">
+		{%csrf_token%}
+		<input type="hidden" name="orderId" value="{{orderId}}">
+		<input type="submit" name="submit" value="PLACE ANOTHER ORDER" class="btn">		
+	</form>
+	</div>
+
+<script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+
+<script>
+	window.onbeforeunload = function() {
+    return "Your order has been placed You cannot go back";
+	};
+var countDownDate = new Date("{{estimatedTimeOfDelivery}}").getTime();
+console.log("timeOrderPLaced: {{timeOrderPlaced}}");
+console.log("estimatedTimeOfDelivery : {{estimatedTimeOfDelivery}}");
+
+
+var x = setInterval(function() {
+
+    var now = new Date().getTime();
+    
+    var distance = countDownDate - now ;
+    
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+    document.getElementById("timer").innerHTML = minutes + ":" + seconds;
+    
+    if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("message").innerHTML = "YOUR ORDER IS READY!!!";
+        document.getElementById("timer").innerHTML = "";
+    }
+}, 1000);
+
+var checkIfCompleted = setInterval(function(){
+	console.log("sending ajax");
+	$.ajax({
+		url:"{%url 'orderCompleted' orderId %}",
+		type : 'POST',
+		data : {},
+		success : function(data) {
+			if(data == 201){
+				countDownDate = new Date().getTime();
+				clearInterval(checkIfCompleted);
+			}
+		}
+	});
+},15000);
+
+
+</script>
+{%endblock body%}
